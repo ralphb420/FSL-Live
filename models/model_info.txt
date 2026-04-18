@@ -1,0 +1,10 @@
+FSL A-Z Static Letters Model
+============================================================
+
+Model: Deep Neural Network (DNN)
+Accuracy: 0.9120
+Classes: 26
+Actions: A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z
+Training samples: 9360
+Test samples: 2340
+Input shape: (126,) - hand landmarks
