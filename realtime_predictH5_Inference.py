@@ -3,6 +3,7 @@ import mediapipe as mp
 import numpy as np
 from tensorflow import keras
 from collections import deque
+from scipy.ndimage import gaussian_filter
 
 # Load model
 MODEL_PATH = 'models/fsl_az_static.h5'
@@ -124,7 +125,7 @@ def get_hand_bbox(hand_landmarks, image_shape, padding=0.4):
     
     return x_min_px, y_min_px, x_max_px, y_max_px
 
-def crop_and_resize_hand(frame, bbox, target_size=640):
+def crop_and_resize_hand(frame, bbox, target_size=320):
     """
     Crop hand region and resize to optimal size
     
@@ -155,9 +156,13 @@ def crop_and_resize_hand(frame, bbox, target_size=640):
     y_offset = (max_dim - h) // 2
     x_offset = (max_dim - w) // 2
     square[y_offset:y_offset+h, x_offset:x_offset+w] = cropped
-    
+
     # Resize to target size
-    resized = cv2.resize(square, (target_size, target_size), interpolation=cv2.INTER_CUBIC)
+
+    blurred = gaussian_filter(square, sigma=1)
+    resized = cv2.resize(blurred, (target_size, target_size), interpolation=cv2.INTER_CUBIC)
+
+    # resized = cv2.resize(square, (target_size, target_size), interpolation=cv2.INTER_CUBIC)
     
     return resized
 
