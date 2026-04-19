@@ -270,13 +270,6 @@ while cap.isOpened():
             cv2.putText(frame, lock_text, (x_min, y_min - 10),
                        cv2.FONT_HERSHEY_SIMPLEX, 0.7, box_color, 2)
             
-            # Draw landmarks on original frame
-            mp_drawing.draw_landmarks(
-                frame, selected_hand, mp_hands.HAND_CONNECTIONS,
-                mp_drawing_styles.get_default_hand_landmarks_style(),
-                mp_drawing_styles.get_default_hand_connections_style()
-            )
-            
             # Draw handedness (Left/Right)
             if handedness:
                 hand_label = handedness.classification[0].label
@@ -308,7 +301,7 @@ while cap.isOpened():
         cv2.putText(frame, f"Stable: {stable_letter} ({stability:.0f}%)", 
                    (10, 80), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 255, 0), 2)
     predicted_letter = stable_letter
-    
+
     # Display hand lock status
     lock_status = "Hand Locked" if hand_locked else "Searching for hand..."
     lock_color = (0, 255, 0) if hand_locked else (0, 255, 255)
